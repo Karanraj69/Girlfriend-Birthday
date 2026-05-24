@@ -1,0 +1,2225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ours — A Love Story</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Dancing+Script:wght@400;600&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+/* ═══════════════════════════════════════════
+   OURS — A Love Story
+   Style Sheet
+   ═══════════════════════════════════════════ */
+
+/* ── Variables ── */
+:root {
+  --cream:    #fdf6ee;
+  --blush:    #f2d0c8;
+  --rose:     #e8a49c;
+  --deeprose: #c97b7b;
+  --gold:     #c9a96e;
+  --goldlt:   #e8d5b0;
+  --text:     #4a3630;
+  --textlt:   #8a6a65;
+  --white:    #ffffff;
+  --shadow:   rgba(74, 54, 48, 0.12);
+
+  --font-serif:  'Cormorant Garamond', Georgia, serif;
+  --font-script: 'Dancing Script', cursive;
+  --font-sans:   'Jost', sans-serif;
+
+  --radius: 20px;
+  --radius-sm: 10px;
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ══════════════════════════════════════════
+   PETALS
+══════════════════════════════════════════ */
+.petal {
+  position: fixed;
+  pointer-events: none;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: petalFall linear forwards;
+  z-index: 9999;
+  user-select: none;
+}
+
+@keyframes petalFall {
+  0%   { opacity: 0.9; transform: translateY(-20px) rotate(0deg); }
+  100% { opacity: 0;   transform: translateY(110vh) rotate(360deg); }
+}
+
+.petals-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+
+/* ══════════════════════════════════════════
+   PASSWORD GATE
+══════════════════════════════════════════ */
+#password-gate {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  background: var(--cream);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#password-gate.fade-out {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+.gate-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(242,208,200,0.5) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, rgba(232,164,156,0.4) 0%, transparent 50%);
+}
+
+.gate-card {
+  position: relative;
+  text-align: center;
+  padding: 3rem 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px);
+  border-radius: 28px;
+  border: 1px solid rgba(201,169,110,0.3);
+  box-shadow: 0 24px 64px var(--shadow), 0 0 0 1px rgba(255,255,255,0.5) inset;
+}
+
+.gate-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  animation: floatHeart 3s ease-in-out infinite;
+}
+
+.gate-label {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--textlt);
+  margin-bottom: 0.5rem;
+}
+
+.gate-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 2.6rem);
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+.gate-title em {
+  font-style: italic;
+  color: var(--deeprose);
+  font-family: var(--font-script);
+  font-size: 1.2em;
+}
+
+.input-wrap {
+  display: flex;
+  gap: 0;
+  border-radius: 50px;
+  overflow: hidden;
+  border: 1.5px solid var(--rose);
+  background: white;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.3s;
+}
+
+.input-wrap:focus-within { border-color: var(--gold); }
+
+#pw-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.85rem 1.2rem;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--text);
+  background: transparent;
+  letter-spacing: 0.05em;
+}
+
+#pw-btn {
+  background: var(--deeprose);
+  color: white;
+  border: none;
+  padding: 0 1.4rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#pw-btn:hover { background: var(--rose); }
+
+.pw-error {
+  color: var(--deeprose);
+  font-size: 0.82rem;
+  min-height: 1.2em;
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.gate-hint {
+  font-size: 0.75rem;
+  color: var(--textlt);
+  margin-top: 0.75rem;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+#main-nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(253,246,238,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(201,169,110,0.2);
+  z-index: 500;
+}
+
+.nav-brand {
+  font-family: var(--font-script);
+  font-size: 1.6rem;
+  color: var(--deeprose);
+  letter-spacing: 0.05em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--textlt);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--deeprose); }
+
+/* ══════════════════════════════════════════
+   SECTIONS — shared
+══════════════════════════════════════════ */
+section {
+  padding: 6rem 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  border: 1px solid var(--goldlt);
+  padding: 0.25rem 1rem;
+  border-radius: 50px;
+  background: rgba(201,169,110,0.08);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--deeprose);
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 5rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 40%, rgba(242,208,200,0.6) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 70%, rgba(232,164,156,0.4) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  font-family: var(--font-script);
+  font-size: 1.3rem;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--deeprose);
+  display: block;
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--textlt);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 0.85rem 2.5rem;
+  background: var(--deeprose);
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  transition: all 0.3s;
+  animation: fadeUp 0.8s ease forwards;
+  animation-delay: 0.8s;
+  opacity: 0;
+  box-shadow: 0 8px 28px rgba(201,123,123,0.35);
+}
+
+.hero-cta:hover {
+  background: var(--rose);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(201,123,123,0.4);
+}
+
+.hero-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.15;
+  animation: floatHeart var(--dur, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes floatHeart {
+  0%, 100% { transform: translateY(0px) rotate(-5deg); opacity: 0.12; }
+  50%       { transform: translateY(-18px) rotate(5deg); opacity: 0.22; }
+}
+
+/* ══════════════════════════════════════════
+   GALLERY
+══════════════════════════════════════════ */
+#gallery { max-width: 1100px; }
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+}
+
+.gallery-item {
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  background: var(--blush);
+  aspect-ratio: 1;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s;
+  box-shadow: 0 4px 20px var(--shadow);
+}
+
+/* make first item span 2 rows for visual interest */
+.gallery-item:nth-child(1) { grid-row: span 2; aspect-ratio: auto; }
+.gallery-item:nth-child(4) { grid-column: span 2; aspect-ratio: 2/1; }
+
+.gallery-item:hover {
+  transform: scale(1.03) rotate(0.5deg);
+  box-shadow: 0 16px 40px var(--shadow);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.gallery-item:hover img { transform: scale(1.06); }
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(74,54,48,0.6) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem;
+}
+
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+
+.gallery-caption {
+  color: white;
+  font-family: var(--font-script);
+  font-size: 1.1rem;
+}
+
+/* Lightbox */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(30,20,18,0.92);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+}
+
+#lightbox.active { display: flex; }
+
+#lightbox img {
+  max-width: 85vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+
+#lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 2rem;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+#lightbox-close:hover { opacity: 1; }
+
+/* ══════════════════════════════════════════
+   REASONS
+══════════════════════════════════════════ */
+#reasons {
+  background: linear-gradient(135deg, rgba(242,208,200,0.3) 0%, rgba(232,164,156,0.15) 100%);
+  border-radius: 40px;
+  max-width: 780px;
+}
+
+.reasons-card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.reasons-card {
+  background: white;
+  border-radius: 28px;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 560px;
+  text-align: center;
+  box-shadow: 0 12px 40px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.reasons-card::before {
+  content: '♡';
+  position: absolute;
+  top: -0.8rem;
+  right: 1.5rem;
+  font-size: 8rem;
+  color: rgba(232,164,156,0.08);
+  pointer-events: none;
+  font-family: serif;
+}
+
+.reason-number {
+  font-family: var(--font-script);
+  font-size: 1rem;
+  color: var(--rose);
+  margin-bottom: 1rem;
+}
+
+.reason-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--text);
+  font-style: italic;
+}
+
+.reasons-controls {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.reason-counter {
+  font-size: 0.8rem;
+  color: var(--textlt);
+  letter-spacing: 0.08em;
+  min-width: 70px;
+  text-align: center;
+}
+
+.reasons-dots {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 320px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blush);
+  transition: all 0.3s;
+}
+
+.dot.active {
+  background: var(--deeprose);
+  transform: scale(1.4);
+}
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn-primary {
+  background: var(--deeprose);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 6px 20px rgba(201,123,123,0.3);
+}
+
+.btn-primary:hover {
+  background: var(--rose);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(201,123,123,0.4);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--deeprose);
+  border: 1.5px solid var(--rose);
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-ghost:hover {
+  background: rgba(232,164,156,0.12);
+  transform: translateY(-2px);
+}
+
+.btn-ghost.small {
+  padding: 0.4rem 1.2rem;
+  font-size: 0.78rem;
+}
+
+/* ══════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════ */
+#timeline { max-width: 760px; }
+
+.timeline-wrap {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.timeline-wrap::before {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--blush), var(--rose), var(--blush));
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  padding: 1.5rem 1.8rem;
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 20px var(--shadow);
+  transition: transform 0.3s;
+  border-left: 3px solid var(--blush);
+}
+
+.timeline-item:hover {
+  transform: translateX(6px);
+  border-left-color: var(--rose);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -2.85rem;
+  top: 1.5rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--deeprose);
+  border: 3px solid var(--cream);
+  box-shadow: 0 0 0 3px var(--rose);
+}
+
+.timeline-date {
+  font-family: var(--font-script);
+  font-size: 0.95rem;
+  color: var(--gold);
+  margin-bottom: 0.4rem;
+}
+
+.timeline-event {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+.timeline-desc {
+  font-size: 0.9rem;
+  color: var(--textlt);
+  line-height: 1.7;
+}
+
+.timeline-emoji {
+  position: absolute;
+  right: 1.5rem;
+  top: 1.2rem;
+  font-size: 1.8rem;
+}
+
+/* ══════════════════════════════════════════
+   LOVE LETTER
+══════════════════════════════════════════ */
+#letter {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  max-width: 900px;
+}
+
+.letter-bg-text {
+  position: absolute;
+  font-family: var(--font-script);
+  font-size: 18rem;
+  color: rgba(232,164,156,0.06);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Envelope */
+.letter-envelope {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.letter-envelope:hover { transform: scale(1.05) rotate(-1deg); }
+
+.envelope-flap {
+  width: 280px;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 90px solid var(--blush);
+  transition: all 0.5s;
+}
+
+.letter-envelope:hover .envelope-flap {
+  border-top-color: var(--rose);
+}
+
+.envelope-body {
+  width: 280px;
+  height: 180px;
+  background: linear-gradient(135deg, var(--blush) 0%, var(--rose) 100%);
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 12px 40px rgba(201,123,123,0.3);
+  position: relative;
+}
+
+.envelope-seal {
+  font-size: 2.5rem;
+  animation: floatHeart 2.5s ease-in-out infinite;
+}
+
+.envelope-hint {
+  font-size: 0.75rem;
+  color: white;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* Letter paper */
+.letter-content { max-width: 600px; margin: 0 auto; }
+
+.letter-paper {
+  background: white;
+  border-radius: 4px 4px 4px 4px;
+  padding: 3.5rem 3rem;
+  text-align: left;
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.08),
+    0 20px 60px var(--shadow),
+    4px 0 0 var(--goldlt) inset;
+  position: relative;
+  line-height: 2;
+  animation: letterUnfold 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.letter-paper::before {
+  content: '';
+  position: absolute;
+  left: 3.5rem;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(232,164,156,0.3);
+}
+
+@keyframes letterUnfold {
+  from { transform: scaleY(0.6) translateY(-20px); opacity: 0; }
+  to   { transform: scaleY(1) translateY(0); opacity: 1; }
+}
+
+.letter-date {
+  font-size: 0.8rem;
+  color: var(--textlt);
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.letter-dear {
+  font-family: var(--font-script);
+  font-size: 1.6rem;
+  color: var(--deeprose);
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+}
+
+.letter-body {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 2;
+}
+
+.letter-body p { margin-bottom: 1.2rem; }
+
+.letter-sign {
+  margin-top: 2rem;
+  font-family: var(--font-script);
+  font-size: 1.3rem;
+  color: var(--text);
+  line-height: 1.8;
+}
+
+.letter-sign em {
+  color: var(--deeprose);
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+/* ══════════════════════════════════════════
+   MEMORY JAR
+══════════════════════════════════════════ */
+#jar {
+  background: linear-gradient(135deg, rgba(232,213,176,0.25) 0%, rgba(242,208,200,0.3) 100%);
+  border-radius: 40px;
+  max-width: 700px;
+}
+
+.jar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.jar-container {
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.jar-container:hover { transform: scale(1.05) rotate(-1deg); }
+
+.jar-glass { display: flex; flex-direction: column; align-items: center; }
+
+.jar-mouth {
+  width: 100px;
+  height: 22px;
+  background: linear-gradient(180deg, rgba(201,169,110,0.6) 0%, rgba(201,169,110,0.3) 100%);
+  border-radius: 6px 6px 0 0;
+  border: 2px solid rgba(201,169,110,0.8);
+}
+
+.jar-body {
+  width: 160px;
+  height: 200px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(232,213,176,0.5) 100%);
+  border-radius: 12px 12px 28px 28px;
+  border: 2.5px solid rgba(201,169,110,0.5);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.jar-notes {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  padding: 6px;
+  align-content: flex-end;
+}
+
+.jar-note-bit {
+  width: 30px;
+  height: 18px;
+  border-radius: 3px;
+  opacity: 0.85;
+  animation: noteWiggle 2s ease-in-out infinite;
+  animation-delay: var(--nd, 0s);
+}
+
+@keyframes noteWiggle {
+  0%, 100% { transform: rotate(var(--nr, -3deg)); }
+  50%       { transform: rotate(calc(var(--nr, -3deg) * -1)); }
+}
+
+.jar-shine {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  width: 16px;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.8) 0%, transparent 100%);
+  border-radius: 8px;
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.jar-base {
+  width: 140px;
+  height: 16px;
+  background: rgba(201,169,110,0.4);
+  border-radius: 0 0 12px 12px;
+  border: 2px solid rgba(201,169,110,0.5);
+  border-top: none;
+}
+
+.jar-tap-hint {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--textlt);
+  letter-spacing: 0.08em;
+}
+
+/* Memory card */
+.memory-paper {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 12px 40px var(--shadow);
+  border: 1px solid var(--goldlt);
+  animation: memoryPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes memoryPop {
+  from { transform: scale(0.7) rotate(-5deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.memory-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+.memory-text {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--text);
+  line-height: 1.6;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--text);
+  color: rgba(253,246,238,0.7);
+  font-size: 0.85rem;
+}
+
+.footer-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  color: var(--rose);
+  font-size: 1.2rem;
+}
+
+.footer-hearts span {
+  animation: floatHeart 3s ease-in-out infinite;
+}
+
+.footer-hearts span:nth-child(2) { animation-delay: 0.5s; }
+.footer-hearts span:nth-child(3) { animation-delay: 1s; }
+
+.footer-heart { animation: heartbeat 1.5s ease-in-out infinite; }
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.3); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.2); }
+  70%       { transform: scale(1); }
+}
+
+footer strong { color: var(--goldlt); }
+
+.footer-sub {
+  margin-top: 0.5rem;
+  font-family: var(--font-script);
+  font-size: 1rem;
+  color: rgba(253,246,238,0.4);
+}
+
+/* ══════════════════════════════════════════
+   LIGHTBOX
+══════════════════════════════════════════ */
+#lightbox { cursor: pointer; }
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════
+   REASON SLIDE ANIMATION
+══════════════════════════════════════════ */
+.reason-slide-out {
+  animation: slideOut 0.3s ease forwards;
+}
+
+.reason-slide-in {
+  animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideOut {
+  to { opacity: 0; transform: translateX(-30px) scale(0.96); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(30px) scale(0.96); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-item:nth-child(1) { grid-row: span 1; aspect-ratio: 1; }
+  .gallery-item:nth-child(4) { grid-column: span 1; aspect-ratio: 1; }
+
+  #reasons { padding: 4rem 1.2rem; }
+  .reasons-card { padding: 2rem 1.5rem; }
+
+  .timeline-wrap { padding-left: 1.8rem; }
+
+  .envelope-flap {
+    width: 220px;
+    border-left-width: 110px;
+    border-right-width: 110px;
+    border-top-width: 70px;
+  }
+
+  .envelope-body { width: 220px; height: 140px; }
+
+  .letter-paper { padding: 2.5rem 1.5rem; }
+
+  section { padding: 4rem 1.2rem; }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid { grid-template-columns: 1fr; }
+  .gallery-item:nth-child(4) { grid-column: span 1; aspect-ratio: 1; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 3px; }
+
+  
+/* ══════════════════════════════════════════
+   GALLERY — ENVELOPE + POLAROID CAROUSEL
+══════════════════════════════════════════ */
+.gallery-envelope-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+/* Envelope */
+.gallery-envelope {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.gallery-envelope:hover { transform: scale(1.04) rotate(-1deg); }
+
+.gallery-env-flap {
+  width: 300px;
+  height: 0;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 96px solid var(--blush);
+  transition: border-top-color 0.3s;
+}
+
+.gallery-envelope:hover .gallery-env-flap { border-top-color: var(--rose); }
+
+.gallery-env-body {
+  width: 300px;
+  height: 190px;
+  background: linear-gradient(135deg, var(--blush) 0%, var(--rose) 100%);
+  border-radius: 0 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  box-shadow: 0 14px 40px rgba(201,123,123,0.3);
+}
+
+.gallery-env-seal { font-size: 2.5rem; animation: floatHeart 2.5s ease-in-out infinite; }
+.gallery-env-hint { font-size: 0.75rem; color: white; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; }
+
+@keyframes envShake {
+  0%   { transform: rotate(0deg); }
+  15%  { transform: rotate(-4deg) scale(1.03); }
+  30%  { transform: rotate(4deg) scale(1.03); }
+  45%  { transform: rotate(-3deg); }
+  60%  { transform: rotate(3deg); }
+  75%  { transform: rotate(-1.5deg); }
+  90%  { transform: rotate(1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.gallery-envelope.shaking { animation: envShake 0.55s ease; }
+
+/* Polaroid Carousel */
+.polaroid-carousel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+.carousel-stage {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid {
+  position: absolute;
+  background: white;
+  padding: 10px 10px 36px 10px;
+  box-shadow: 0 8px 32px rgba(74,54,48,0.18);
+  border-radius: 4px;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.polaroid img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+}
+
+/* Center (active) */
+.polaroid.pos-center {
+  transform: rotate(0deg) scale(1) translateX(0);
+  z-index: 10;
+  filter: none;
+  box-shadow: 0 20px 60px rgba(74,54,48,0.28);
+}
+
+/* Left positions */
+.polaroid.pos-left1 {
+  transform: rotate(-6deg) translateX(-180px) scale(0.82);
+  z-index: 6;
+  filter: blur(2px) brightness(0.85);
+}
+.polaroid.pos-left2 {
+  transform: rotate(-11deg) translateX(-310px) scale(0.68);
+  z-index: 4;
+  filter: blur(4px) brightness(0.75);
+}
+
+/* Right positions */
+.polaroid.pos-right1 {
+  transform: rotate(6deg) translateX(180px) scale(0.82);
+  z-index: 6;
+  filter: blur(2px) brightness(0.85);
+}
+.polaroid.pos-right2 {
+  transform: rotate(11deg) translateX(310px) scale(0.68);
+  z-index: 4;
+  filter: blur(4px) brightness(0.75);
+}
+
+/* Hidden (overflow) */
+.polaroid.pos-hidden {
+  transform: translateX(600px) scale(0.5);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+.polaroid.pos-hidden-left {
+  transform: translateX(-600px) scale(0.5);
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.polaroid-caption {
+  font-family: var(--font-script);
+  font-size: 1.7rem;
+  color: var(--deeprose);
+  text-align: center;
+  min-height: 2rem;
+  transition: opacity 0.3s;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: 1.5px solid var(--rose);
+  color: var(--deeprose);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 20;
+  transition: all 0.3s;
+  box-shadow: 0 4px 16px var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow:hover { background: var(--blush); transform: translateY(-50%) scale(1.1); }
+.carousel-arrow.left  { left: 0; }
+.carousel-arrow.right { right: 0; }
+
+/* Wrap arrows inside stage */
+.polaroid-carousel { position: relative; }
+.carousel-arrow { position: absolute; }
+.carousel-arrow.left  { left: 0; top: calc(50% - 80px); }
+.carousel-arrow.right { right: 0; top: calc(50% - 80px); }
+
+.carousel-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+@media (max-width: 600px) {
+  .polaroid img { width: 160px; height: 160px; }
+  .carousel-stage { height: 260px; }
+  .polaroid.pos-left1  { transform: rotate(-6deg) translateX(-120px) scale(0.75); }
+  .polaroid.pos-left2  { transform: rotate(-11deg) translateX(-200px) scale(0.6); filter: blur(5px) brightness(0.7); }
+  .polaroid.pos-right1 { transform: rotate(6deg) translateX(120px) scale(0.75); }
+  .polaroid.pos-right2 { transform: rotate(11deg) translateX(200px) scale(0.6); filter: blur(5px) brightness(0.7); }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       PASSWORD GATE
+  ══════════════════════════════════════════════ -->
+  <section id="password-gate">
+    <div class="gate-bg"></div>
+    <div class="petals-container" id="gate-petals"></div>
+    <div class="gate-card">
+      <div class="gate-icon">🌸</div>
+      <p class="gate-label">This was made just for you.</p>
+      <h1 class="gate-title">Enter to open<br/><em>your gift.</em></h1>
+      <div class="input-wrap">
+        <input
+          type="password"
+          id="pw-input"
+          placeholder="Your secret word…"
+          autocomplete="off"
+        />
+        <button id="pw-btn" onclick="checkPassword()">→</button>
+      </div>
+      <p id="pw-error" class="pw-error"></p>
+      <p class="gate-hint">Hint: what do I call you when you're sleepy? 🥱</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       MAIN APP (hidden until password)
+  ══════════════════════════════════════════════ -->
+  <div id="app" class="hidden">
+
+    <!-- PETALS LAYER (global) -->
+    <div id="petals-layer" class="petals-layer"></div>
+
+    <!-- ── NAV ── -->
+    <nav id="main-nav">
+      <span class="nav-brand">Ours</span>
+      <div class="nav-links">
+        <a href="#gallery" onclick="smoothTo('gallery');return false;">Gallery</a>
+        <a href="#reasons" onclick="smoothTo('reasons');return false;">Love</a>
+        <a href="#timeline" onclick="smoothTo('timeline');return false;">Us</a>
+        <a href="#letter" onclick="smoothTo('letter');return false;">Letter</a>
+        <a href="#jar" onclick="smoothTo('jar');return false;">Jar</a>
+      </div>
+    </nav>
+
+    <!-- ── HERO ── -->
+    <section id="hero">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Happy Birthday, my little princess</p>
+        <h1 class="hero-title">You are<br/><em>my everything.</em></h1>
+        <p class="hero-sub">A little world I built just for you —<br/>because you deserve the whole universe.</p>
+        <a href="#gallery" class="hero-cta" onclick="smoothTo('gallery');return false;">Begin ↓</a>
+      </div>
+      <div class="hero-hearts" id="hero-hearts"></div>
+    </section>
+
+    <!-- ── GALLERY ── -->
+    <section id="gallery">
+      <div class="section-header">
+        <span class="section-tag">Our Memories</span>
+        <h2 class="section-title">Moments I<br/><em>never want to forget</em></h2>
+      </div>
+      <!-- Gallery Envelope -->
+      <div class="gallery-envelope-wrap">
+        <div class="gallery-envelope" id="gallery-envelope" onclick="openGalleryEnvelope()">
+          <div class="gallery-env-flap"></div>
+          <div class="gallery-env-body">
+            <span class="gallery-env-seal">📸</span>
+            <p class="gallery-env-hint">Tap to open our memories</p>
+          </div>
+        </div>
+        <!-- Polaroid Carousel (hidden until envelope opens) -->
+        <div class="polaroid-carousel hidden" id="polaroid-carousel">
+          <button class="carousel-arrow left" onclick="slideCarousel(-1)">&#8592;</button>
+          <div class="carousel-stage" id="carousel-stage"></div>
+          <button class="carousel-arrow right" onclick="slideCarousel(1)">&#8594;</button>
+          <p class="polaroid-caption" id="polaroid-caption"></p>
+          <div class="carousel-dots" id="carousel-dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── REASONS ── -->
+    <section id="reasons">
+      <div class="section-header">
+        <span class="section-tag">From My Heart</span>
+        <h2 class="section-title">Reasons I<br/><em>love you</em></h2>
+      </div>
+      <div class="reasons-card-wrap">
+        <div class="reasons-card" id="reasons-card">
+          <div class="reason-number" id="reason-number">#1</div>
+          <p class="reason-text" id="reason-text"></p>
+        </div>
+        <div class="reasons-controls">
+          <button class="btn-ghost" onclick="prevReason()">← Prev</button>
+          <span class="reason-counter" id="reason-counter"></span>
+          <button class="btn-primary" onclick="nextReason()">Next →</button>
+        </div>
+        <div class="reasons-dots" id="reasons-dots"></div>
+      </div>
+    </section>
+
+    <!-- ── TIMELINE ── -->
+    <section id="timeline">
+      <div class="section-header">
+        <span class="section-tag">Our Story</span>
+        <h2 class="section-title">From that day<br/><em>to this one</em></h2>
+      </div>
+      <div class="timeline-wrap" id="timeline-wrap">
+        <!-- Timeline items injected by JS -->
+      </div>
+    </section>
+
+    <!-- ── LOVE LETTER ── -->
+    <section id="letter">
+      <div class="letter-bg-text">love</div>
+      <div class="letter-envelope" id="letter-envelope" onclick="openLetter()">
+        <div class="envelope-flap"></div>
+        <div class="envelope-body">
+          <span class="envelope-seal">💌</span>
+          <p class="envelope-hint">Tap to open</p>
+        </div>
+      </div>
+      <div class="letter-content hidden" id="letter-content">
+        <div class="letter-paper">
+          <p class="letter-date" id="letter-date"></p>
+          <h3 class="letter-dear">My dearest love,</h3>
+          <div class="letter-body" id="letter-body"></div>
+          <p class="letter-sign">Forever yours,<br/><em id="letter-from">Your Person</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MEMORY JAR ── -->
+    <section id="jar">
+      <div class="section-header">
+        <span class="section-tag">Memory Jar</span>
+        <h2 class="section-title">Reach in<br/><em>and remember</em></h2>
+      </div>
+      <div class="jar-wrap">
+        <div class="jar-container" id="jar-container" onclick="pickMemory()">
+          <div class="jar-glass">
+            <div class="jar-mouth"></div>
+            <div class="jar-body">
+              <div class="jar-notes" id="jar-notes"></div>
+              <div class="jar-shine"></div>
+            </div>
+            <div class="jar-base"></div>
+          </div>
+          <p class="jar-tap-hint">Tap the jar ✨</p>
+        </div>
+        <div class="jar-memory-card hidden" id="jar-memory-card">
+          <div class="memory-paper">
+            <p class="memory-icon" id="memory-icon"></p>
+            <p class="memory-text" id="memory-text"></p>
+            <button class="btn-ghost small" onclick="closeMemory()">Put it back 🫙</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FOOTER ── -->
+    <footer>
+      <div class="footer-hearts">
+        <span>♡</span><span>♡</span><span>♡</span>
+      </div>
+      <p>Made with <span class="footer-heart">❤️</span> by <strong id="footer-name">Your Name</strong></p>
+      <p class="footer-sub">Just for you. Only ever for you.</p>
+    </footer>
+
+  </div><!-- /app -->
+
+  <script>
+/* ═══════════════════════════════════════════
+   OURS — A Love Story  |  script.js
+   ═══════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────
+   ★ CUSTOMIZE EVERYTHING BELOW THIS LINE ★
+   ───────────────────────────────────────────── */
+
+const CONFIG = {
+
+  /* 1. PASSWORD
+     She types this to unlock the site. Keep it something personal.
+     Example: "buttercup", "mystar", "softy" */
+  password: "idiot",
+
+  /* 2. YOUR NAME (shown at the bottom) */
+  yourName: "Someone",
+
+  /* 3. HER NAME (used in the hero and letter) */
+  herName: "My Love",
+
+  /* 4. GALLERY PHOTOS
+     Replace the src values with your own image filenames.
+     Put all images in an "images/" folder inside the project folder.
+     Example src: "images/firstdate.jpg"
+     Leave caption empty ("") if you don't want one shown. */
+        photos: [
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "our little moment" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "my favourite rabbit" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "my favourite ghost" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "when you scream my name" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "blur but memorable" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "how depression looks like" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "someone wants icecream" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "did someone said boiling his blood?" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "when someone knows they are gonna get scolded now" },
+    { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MDAiIGhlaWdodD0iNjAwIiBzdHlsZT0iYmFja2dyb3VuZDp3aGl0ZSI+CiAgPHJlY3Qgd2lkdGg9IjYwMCIgaGVpZ2h0PSI2MDAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiNlOGE0OWMiIHN0cm9rZS13aWR0aD0iNCIvPgogIDx0ZXh0IHg9IjMwMCIgeT0iMjgwIiBmb250LWZhbWlseT0iR2VvcmdpYSxzZXJpZiIgZm9udC1zaXplPSIzNiIgZmlsbD0iI2M5N2I3YiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+YWRkIHBpYzwvdGV4dD4KICA8dGV4dCB4PSIzMDAiIHk9IjM0MCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZpbGw9IiNlOGE0OWMiIHRleHQtYW5jaG9yPSJtaWRkbGUiPnlvdXIgbWVtb3J5IGhlcmU8L3RleHQ+Cjwvc3ZnPg==", caption: "when someone is getting scolded" },
+  ],
+
+  /* 5. REASONS I LOVE YOU
+     Replace with your real reasons. Be specific — generic is boring.
+     "You always save me the first bite" beats "You're so kind." */
+    reasons: [
+    "I love how soft you are, even in a harsh world.",
+    "I love that your beauty isn't just seen, it's felt.",
+    "I love how you just scream your name when things are in chaos.",
+    "I love the way your presence makes everything quieter inside me.",
+    "I love our first hug—it felt like something finally i found.",
+    "I love that hug in the lift—it felt like time paused for us.",
+    "I love how you made your first birthday with me unforgettable.",
+    "I love the way you act on video calls, like you forget the world exists.",
+    "I love your unfiltered, real self when you're just being you.",
+    "I love that your smiles aren't perfect—they're honest.",
+    "I love your scars, not despite them, but because they tell your story.",
+    "I love that you trust me enough to show your fears.",
+    "I love that I don't need you to be perfect to love you.",
+    "I love the way you made me more understanding.",
+    "I love that I became easier to talk to because of you.",
+    "I love that you changed me without forcing me.",
+    "I love the way your eyes soften when you look at me.",
+    "I love how your expressions say things words cannot define.",
+    "I love the way you pose in pictures like the world is watching you.",
+    "I love that even your smallest habits stay in my mind.",
+    "I love that \"intel\" became something only we understand.",
+    "I love that we have our own little language.",
+    "I love how you fight through your physical struggles every day.",
+    "I love your strength when you are alone but still decide to fight.",
+    "I love that you don't give up, even when it's hard.",
+    "I love how you handled your 10th boards with pressure on your shoulders.",
+    "I love that you kept going even on days you didn't want to.",
+    "I love that you chose to wake up even when it felt heavy.",
+    "I love your silent battles that no one else sees.",
+    "I love how strong you are, even when you don't feel it.",
+    "I love that you call me just to hear my voice.",
+    "I love that you text me and check on my day.",
+    "I love that you care about the small details in my life.",
+    "I love how you make me feel noticed.",
+    "I love how you make me feel chosen.",
+    "I love that your care isn't loud, but it's constant.",
+    "I love how you show love in simple ways.",
+    "I love that you stay, even when things aren't easy.",
+    "I love the comfort you bring when i just see you and get in your arms.",
+    "I love that you became my safe place.",
+    "I love imagining a future with you.",
+    "I love the thought of building a family together.",
+    "I love that you are part of my long-term dreams.",
+    "I love that you make the future feel real, not scary.",
+    "I love that \"us\" feels like something permanent.",
+    "I love that you gave meaning to the word \"home.\"",
+    "I love that I don't have to pretend around you.",
+    "I love that you see me as I am.",
+    "I love that you stayed even after seeing my flaws.",
+    "I love you, not for one reason—but for a thousand I still can't fully explain.",
+    "I love the way you say my name.",
+    "I love how your voice feels like comfort to me.",
+    "I love the little pauses you take while talking.",
+    "I love how you listen, not just hear.",
+    "I love how you make ordinary moments feel special.",
+    "I love the calm you bring into my life.",
+    "I love how you don't need to try to be perfect.",
+    "I love how natural you are with me.",
+    "I love the warmth in your presence.",
+    "I love how being with you feels like peace.",
+    "I love the way your eyes tell stories.",
+    "I love how your expressions change in tiny ways.",
+    "I love how you look at me when you're happy.",
+    "I love how you look at me when you're quiet.",
+    "I love how you don't hide your emotions from me.",
+    "I love that you trust me with your real self.",
+    "I love how gentle your heart is.",
+    "I love how deeply you feel things.",
+    "I love how your kindness shows in small actions.",
+    "I love how pure your intentions are.",
+    "I love how you care with softness and patience.",
+    "I love how you check on me even when you're tired.",
+    "I love how you remember little things about me.",
+    "I love how you make me feel important.",
+    "I love how you give your time to me.",
+    "I love how you stay present when we talk.",
+    "I love how you make distance feel smaller.",
+    "I love how you make silence feel comfortable.",
+    "I love how you understand me without words.",
+    "I love how you make me feel seen.",
+    "I love how you try, even on difficult days.",
+    "I love how you keep going, no matter what.",
+    "I love your quiet strength.",
+    "I love your courage, even when you doubt yourself.",
+    "I love how you don't give up even when everyone says to.",
+    "I love how you don't give up on us and tries evey single time.",
+    "I love how you face your struggles with heart.",
+    "I love how you rise again, even after hard moments.",
+    "I love how strong you are in ways no one notices.",
+    "I love how you inspire me just by being you.",
+    "I love how you make me want to be better.",
+    "I love how you changed the way I see love.",
+    "I love how you made my world softer.",
+    "I love how you brought light into my life.",
+    "I love how you made me believe in something real.",
+    "I love how you became part of my everyday thoughts.",
+    "I love how you became part of my dreams.",
+    "I love how you feel like home to me.",
+    "I love how loving you feels natural.",
+    "I love how you turned simple feelings into something beautiful.",
+    "I love how you stayed, even when life tried to pull you away.",
+    "I love how you chose to keep going, no matter even when on one is their.",
+    "I love that your heart still believes in love.",
+    "I love that you didn't let pain take away your softness.",
+    "I love how you still find reasons to smile.",
+    "I love how you still give love, even when you needed it most.",
+    "I love how you let me be part of your life.",
+    "I love how you trusted me with your heart.",
+    "I love how you didn't give up on us.",
+    "I love how you hold on, even when things feel uncertain.",
+    "I love that you are stronger than you think you are.",
+    "I love that even in your weakest moments, you shine.",
+    "I love how your existence itself feels special to me.",
+    "I love how you make my life feel complete.",
+    "I love how you became someone I can't imagine losing.",
+    "I love how you turned into my safe place without trying.",
+    "I love how you understand me in ways no one else does.",
+    "I love how you accept me, even when I'm not at my best.",
+    "I love how you make me feel worthy of love.",
+    "I love how you changed my definition of happiness.",
+    "I love how every moment with you feels meaningful.",
+    "I love how even your silence speaks to me.",
+    "I love how your presence makes everything better.",
+    "I love how you bring calm into my chaos.",
+    "I love how you became my peace in a noisy world.",
+    "I love how you make love feel simple and real.",
+    "I love how you don't need grand things to make me happy.",
+    "I love how just \"you\" is enough for me.",
+    "I love how you made me believe in forever.",
+    "I love how you made me believe in us.",
+    "I love how I see my future when I look at you.",
+    "I love how I imagine a family with you.",
+    "I love how you became part of every plan I make.",
+    "I love how loving you feels like the right thing.",
+    "I love how you gave meaning to my life in a quiet way.",
+    "I love how you became the reason behind my smiles.",
+    "I love how you became the reason I keep going.",
+    "I love how you are not just part of my story—you are my story.",
+    "I love how you are my today and my tomorrow.",
+    "I love how you are my favorite person in this world.",
+    "I love you for more then this.",
+    "I love you for who you are.",
+    "I LOVE YOU SO MUCH HER NAME",
+  ],
+
+  /* 6. RELATIONSHIP TIMELINE
+     Add or remove entries. dates are just labels — write them however you like. */
+  timeline: [
+    {
+      date: "The beginning",
+      event: "We met",
+      desc: "I still don't know how I got that lucky. You walked in and honestly the rest is a history.",
+      emoji: "✨"
+    },
+    {
+      date: "A little later",
+      event: "Our first meet",
+      desc: "Two souls adrift in the same moment — we held hands, and without a word, understood we were everything to each other.",
+      emoji: "🌸"
+    },
+    {
+      date: "That one night",
+      event: "I knew I loved you",
+      desc: "We were talking about nothing important and I just… knew. You were it.",
+      emoji: "💛"
+    },
+    {
+      date: "Not long after",
+      event: "You said it",
+      desc: "Those words weren't there but the feeling was — on the call.",
+      emoji: "💬"
+    },
+    {
+      date: "Valentine's",
+      event: "Our first biggest fight",
+      desc: "Every small moment we were there — talking, fighting, existing. What we didn't know was that with every word, every silence, every storm, we were only getting closer.",
+      emoji: "🩹"
+    },
+    {
+      date: "Today",
+      event: "Your birthday 🎂",
+      desc: "Another year of you. Another year of us. I am so grateful for every single day.",
+      emoji: "🎉"
+    },
+  ],
+
+  /* 7. LOVE LETTER
+     Write it from the heart. Use \n\n for paragraph breaks. */
+  letterFrom: "Someone",   /* How you sign it */
+  letterBody: `There are moments with you that don't feel like memories, but like something my hands still remember till I die. It wasn't long ago—the way I held you once, folded into me, hurting—and I didn't know how to fix anything, so I just held you close enough that the world might forget to hurt you for a while. Your head on my shoulder, my hands tapping your back—not like a solution I had read, but something I promised you, saying, "I am there with you."
+
+And somehow, in all your fear, you still worried I would be the one to leave—that one day your scars would weigh too much, or your storms would make me step back. I was looking at you, saying, "Really? You think that?" and saying to myself, "How idiotic she is." But what I miss is: I don't want things to be in perfection, nor do I want you to be the perfect hider. And as I walked in, saw everything, and still chose to stay—not out of pity or habit, but because something between your broken pieces I found something more honest than anything whole. In some pieces, I saw myself. It was just the time I found you in totally shattered parts, and you were picking them up while hurting yourself. But I still found the her name who laughed sometimes, smiled at the dimmest thing by acting like a kid who forgot pain exists, by being just yourself—and that just made me think how the same person bears so much. And that's the part of you I don't just love, but the part that saves me too.
+
+In this, I won't promise to be perfect forever or say nothing's gonna hurt you again—because that wouldn't be love; that would be a lie. But I will say this and mean every word: When things get heavy for you, when the silence grows, when your fears get louder than the scream of "your nameeee!"—yes, I won't disappear, but I'll probably hold you the same way even after years, tap your back like a kid in arms. And many years from now, everything might change, but this won't—not the words, not the promise, but the feeling of being held like you were never too much to stay for.
+
+And on this birthday of my little princess, I want to tell you: Every moment you thought to end this life, every night you stayed awake or struggled, every moment of the health you fought and thought death was better—those years you survived—I am so grateful that you are here, that you were born. With this, I would like to say: Happy birthday to my little princess.`,
+
+  /* 8. MEMORY JAR
+     These are the little notes she pulls from the jar.
+     Make them specific — inside jokes, real moments, tiny things she loves. */
+        memories: [
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+    { icon: "🎀", text: "insert your own text" },
+  ],
+};
+
+/* ─────────────────────────────────────────────
+   ★ END OF CUSTOMIZATION ZONE ★
+   Don't need to edit below unless you're comfortable with code.
+   ───────────────────────────────────────────── */
+
+
+/* ══════════════════════════════════════════
+   PASSWORD GATE
+══════════════════════════════════════════ */
+function checkPassword() {
+  const input = document.getElementById('pw-input').value.trim().toLowerCase();
+  const expected = CONFIG.password.toLowerCase();
+
+  if (input === expected) {
+    unlockApp();
+  } else {
+    const err = document.getElementById('pw-error');
+    err.textContent = 'Hmm… try again. You know this one 💛';
+    document.getElementById('pw-input').style.borderColor = 'var(--deeprose)';
+    shakeInput();
+  }
+}
+
+function shakeInput() {
+  const wrap = document.querySelector('.input-wrap');
+  wrap.style.transform = 'translateX(-8px)';
+  setTimeout(() => wrap.style.transform = 'translateX(8px)', 80);
+  setTimeout(() => wrap.style.transform = 'translateX(-5px)', 160);
+  setTimeout(() => wrap.style.transform = 'translateX(0)', 240);
+}
+
+document.getElementById('pw-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+function unlockApp() {
+  const gate = document.getElementById('password-gate');
+  gate.classList.add('fade-out');
+  setTimeout(() => {
+    gate.style.display = 'none';
+    document.getElementById('app').classList.remove('hidden');
+    initApp();
+  }, 850);
+}
+
+// Spawn petals on the gate screen
+spawnGatePetals();
+
+function spawnGatePetals() {
+  const container = document.getElementById('gate-petals');
+  const petals = ['🌸', '🌺', '✿', '❀', '🌷'];
+  setInterval(() => {
+    const petal = document.createElement('span');
+    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+    petal.style.cssText = `
+      position: absolute;
+      left: ${Math.random() * 100}%;
+      top: -30px;
+      font-size: ${0.8 + Math.random() * 0.8}rem;
+      opacity: 0.7;
+      animation: petalFall ${4 + Math.random() * 4}s linear forwards;
+    `;
+    container.appendChild(petal);
+    setTimeout(() => petal.remove(), 8000);
+  }, 600);
+}
+
+
+/* ══════════════════════════════════════════
+   INIT APP
+══════════════════════════════════════════ */
+function initApp() {
+  setNames();
+  buildReasons();
+  buildTimeline();
+  buildLetter();
+  buildJar();
+  startPetalRain();
+  initScrollAnimations();
+  buildHeroHearts();
+}
+
+/* Set name references */
+function setNames() {
+  document.getElementById('footer-name').textContent = CONFIG.yourName;
+  document.getElementById('letter-from').textContent = CONFIG.letterFrom;
+}
+
+
+/* ══════════════════════════════════════════
+   GALLERY
+══════════════════════════════════════════ */
+function buildGallery() {
+  const grid = document.getElementById('gallery-grid');
+  CONFIG.photos.forEach((photo, i) => {
+    const item = document.createElement('div');
+    item.className = 'gallery-item fade-in-up';
+    item.innerHTML = `
+      <img src="${photo.src}" alt="${photo.caption || 'Our memory #' + (i+1)}" loading="lazy" />
+      <div class="gallery-overlay">
+        <span class="gallery-caption">${photo.caption || ''}</span>
+      </div>
+    `;
+    item.addEventListener('click', () => openLightbox(photo.src, photo.caption));
+    grid.appendChild(item);
+  });
+}
+
+
+
+
+/* ══════════════════════════════════════════
+   REASONS
+══════════════════════════════════════════ */
+let currentReason = 0;
+
+function buildReasons() {
+  showReason(0, false);
+  buildDots();
+}
+
+function buildDots() {
+  const dotsWrap = document.getElementById('reasons-dots');
+  dotsWrap.innerHTML = '';
+  CONFIG.reasons.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => goToReason(i));
+    dotsWrap.appendChild(dot);
+  });
+}
+
+function showReason(index, animate = true) {
+  const card = document.getElementById('reasons-card');
+  const textEl = document.getElementById('reason-text');
+  const numEl = document.getElementById('reason-number');
+  const counter = document.getElementById('reason-counter');
+
+  if (animate) {
+    card.classList.add('reason-slide-out');
+    setTimeout(() => {
+      updateReasonContent(index, textEl, numEl, counter);
+      card.classList.remove('reason-slide-out');
+      card.classList.add('reason-slide-in');
+      setTimeout(() => card.classList.remove('reason-slide-in'), 350);
+    }, 300);
+  } else {
+    updateReasonContent(index, textEl, numEl, counter);
+  }
+
+  // Update dots
+  document.querySelectorAll('.dot').forEach((d, i) => {
+    d.classList.toggle('active', i === index);
+  });
+}
+
+function updateReasonContent(index, textEl, numEl, counter) {
+  textEl.textContent = CONFIG.reasons[index];
+  numEl.textContent = `#${index + 1}`;
+  counter.textContent = `${index + 1} / ${CONFIG.reasons.length}`;
+}
+
+function nextReason() {
+  currentReason = (currentReason + 1) % CONFIG.reasons.length;
+  showReason(currentReason);
+  burstHeart();
+}
+
+function prevReason() {
+  currentReason = (currentReason - 1 + CONFIG.reasons.length) % CONFIG.reasons.length;
+  showReason(currentReason, true);
+}
+
+function goToReason(index) {
+  currentReason = index;
+  showReason(currentReason);
+}
+
+/* Mini heart burst on next */
+function burstHeart() {
+  const btn = document.querySelector('.btn-primary');
+  const rect = btn.getBoundingClientRect();
+  for (let i = 0; i < 5; i++) {
+    const h = document.createElement('span');
+    h.textContent = ['❤️','🩷','💕','💗','💖'][i];
+    h.style.cssText = `
+      position: fixed;
+      left: ${rect.left + rect.width/2}px;
+      top: ${rect.top}px;
+      font-size: ${0.8 + Math.random()*0.6}rem;
+      pointer-events: none;
+      z-index: 9999;
+      animation: burstFly 0.8s ease forwards;
+      --tx: ${(Math.random()-0.5)*80}px;
+      --ty: ${-(30 + Math.random()*60)}px;
+    `;
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 850);
+  }
+}
+
+const burstStyle = document.createElement('style');
+burstStyle.textContent = `
+  @keyframes burstFly {
+    from { opacity: 1; transform: translate(0, 0) scale(1); }
+    to   { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.5); }
+  }
+`;
+document.head.appendChild(burstStyle);
+
+
+/* ══════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════ */
+function buildTimeline() {
+  const wrap = document.getElementById('timeline-wrap');
+  CONFIG.timeline.forEach((item, i) => {
+    const el = document.createElement('div');
+    el.className = 'timeline-item fade-in-up';
+    el.style.animationDelay = `${i * 0.1}s`;
+    el.innerHTML = `
+      <div class="timeline-emoji">${item.emoji}</div>
+      <div class="timeline-date">${item.date}</div>
+      <div class="timeline-event">${item.event}</div>
+      <div class="timeline-desc">${item.desc}</div>
+    `;
+    wrap.appendChild(el);
+  });
+}
+
+
+/* ══════════════════════════════════════════
+   LOVE LETTER
+══════════════════════════════════════════ */
+function buildLetter() {
+  // Set today's date nicely
+  const formatted = 'Wednesday, 7th of May, 2025';
+  document.getElementById('letter-date').textContent = formatted;
+
+  // Build paragraphs
+  const bodyEl = document.getElementById('letter-body');
+  const paragraphs = CONFIG.letterBody.trim().split('\n\n');
+  bodyEl.innerHTML = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+}
+
+function openLetter() {
+  const envelope = document.getElementById('letter-envelope');
+  const content = document.getElementById('letter-content');
+
+  envelope.style.animation = 'letterUnfold 0.6s ease forwards';
+  setTimeout(() => {
+    envelope.classList.add('hidden');
+    content.classList.remove('hidden');
+    content.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 500);
+}
+
+
+/* ══════════════════════════════════════════
+   MEMORY JAR
+══════════════════════════════════════════ */
+const noteColors = ['#f9d7d2','#fde9c9','#d9ecd0','#d4e8f7','#e8d5f7','#fdf2c0'];
+
+function buildJar() {
+  const notesWrap = document.getElementById('jar-notes');
+  // Fill with decorative note bits
+  for (let i = 0; i < 18; i++) {
+    const note = document.createElement('div');
+    note.className = 'jar-note-bit';
+    note.style.background = noteColors[i % noteColors.length];
+    note.style.setProperty('--nd', `${Math.random() * 2}s`);
+    note.style.setProperty('--nr', `${(Math.random()-0.5)*12}deg`);
+    note.style.transform = `rotate(${(Math.random()-0.5)*12}deg)`;
+    notesWrap.appendChild(note);
+  }
+}
+
+let usedMemories = [];
+
+function pickMemory() {
+  // Reset if all used
+  if (usedMemories.length >= CONFIG.memories.length) usedMemories = [];
+
+  // Pick unused memory
+  const remaining = CONFIG.memories.filter((_, i) => !usedMemories.includes(i));
+  const idx = CONFIG.memories.indexOf(remaining[Math.floor(Math.random() * remaining.length)]);
+  usedMemories.push(idx);
+
+  const memory = CONFIG.memories[idx];
+  document.getElementById('memory-icon').textContent = memory.icon;
+  document.getElementById('memory-text').textContent = memory.text;
+
+  const card = document.getElementById('jar-memory-card');
+  card.classList.remove('hidden');
+
+  // Force re-animation
+  const paper = card.querySelector('.memory-paper');
+  paper.style.animation = 'none';
+  paper.offsetHeight; // reflow
+  paper.style.animation = '';
+
+  document.getElementById('jar-container').style.transform = 'scale(0.95)';
+  setTimeout(() => document.getElementById('jar-container').style.transform = '', 300);
+}
+
+function closeMemory() {
+  document.getElementById('jar-memory-card').classList.add('hidden');
+}
+
+
+/* ══════════════════════════════════════════
+   PETAL RAIN
+══════════════════════════════════════════ */
+function startPetalRain() {
+  const petalSymbols = ['🌸','🌺','🌷','✿','❀','🌼'];
+  const layer = document.getElementById('petals-layer');
+
+  function spawnPetal() {
+    const p = document.createElement('span');
+    p.className = 'petal';
+    p.textContent = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+    const duration = 5 + Math.random() * 6;
+    p.style.cssText = `
+      left: ${Math.random() * 100}vw;
+      font-size: ${0.7 + Math.random() * 0.9}rem;
+      animation-duration: ${duration}s;
+    `;
+    layer.appendChild(p);
+    setTimeout(() => p.remove(), duration * 1000 + 100);
+  }
+
+  // Initial burst
+  for (let i = 0; i < 8; i++) setTimeout(spawnPetal, i * 300);
+  // Continuous gentle fall
+  setInterval(spawnPetal, 1200);
+}
+
+
+/* ══════════════════════════════════════════
+   HERO HEARTS
+══════════════════════════════════════════ */
+function buildHeroHearts() {
+  const wrap = document.getElementById('hero-hearts');
+  const positions = [
+    {left:'8%',  top:'20%'}, {left:'85%', top:'15%'},
+    {left:'15%', top:'70%'}, {left:'78%', top:'65%'},
+    {left:'50%', top:'10%'}, {left:'5%',  top:'45%'},
+    {left:'90%', top:'45%'}, {left:'40%', top:'85%'},
+  ];
+  positions.forEach((pos, i) => {
+    const h = document.createElement('span');
+    h.className = 'floating-heart';
+    h.textContent = ['♡','♡','♡','❤','🩷','💕'][i % 6];
+    h.style.cssText = `
+      left: ${pos.left}; top: ${pos.top};
+      --dur: ${3 + Math.random() * 3}s;
+      --delay: ${Math.random() * 2}s;
+    `;
+    wrap.appendChild(h);
+  });
+}
+
+
+/* ══════════════════════════════════════════
+   SCROLL ANIMATIONS
+══════════════════════════════════════════ */
+function initScrollAnimations() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+}
+
+
+/* ══════════════════════════════════════════
+   NAV SCROLL EFFECT
+══════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('main-nav');
+  if (nav) {
+    nav.style.boxShadow = window.scrollY > 30
+      ? '0 4px 24px rgba(74,54,48,0.1)'
+      : 'none';
+  }
+});
+
+  
+/* ══════════════════════════════════════════
+   GALLERY — ENVELOPE + POLAROID CAROUSEL
+══════════════════════════════════════════ */
+let carouselIndex = 0;
+let carouselAnimating = false;
+
+function openGalleryEnvelope() {
+  const env = document.getElementById('gallery-envelope');
+  if (env.classList.contains('shaking')) return;
+
+  env.classList.add('shaking');
+  setTimeout(() => {
+    env.classList.remove('shaking');
+    env.style.display = 'none';
+    const carousel = document.getElementById('polaroid-carousel');
+    carousel.classList.remove('hidden');
+    buildCarousel();
+  }, 560);
+}
+
+function buildCarousel() {
+  const stage = document.getElementById('carousel-stage');
+  stage.innerHTML = '';
+
+  CONFIG.photos.forEach((photo, i) => {
+    const pol = document.createElement('div');
+    pol.className = 'polaroid';
+    pol.innerHTML = `<img src="${photo.src}" alt="${photo.caption}" draggable="false" />`;
+    pol.addEventListener('click', () => {
+      if (i !== carouselIndex) {
+        carouselIndex = i;
+        updateCarousel();
+      }
+    });
+    stage.appendChild(pol);
+  });
+
+  buildCarouselDots();
+  updateCarousel(false);
+}
+
+function buildCarouselDots() {
+  const wrap = document.getElementById('carousel-dots');
+  wrap.innerHTML = '';
+  CONFIG.photos.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.addEventListener('click', () => { carouselIndex = i; updateCarousel(); });
+    wrap.appendChild(d);
+  });
+}
+
+function updateCarousel(animate = true) {
+  const polaroids = document.querySelectorAll('.polaroid');
+  const total = CONFIG.photos.length;
+
+  polaroids.forEach((pol, i) => {
+    const offset = ((i - carouselIndex) % total + total) % total;
+    // offset: 0=center, 1=right1, 2=right2, total-1=left1, total-2=left2
+    pol.className = 'polaroid';
+    if (offset === 0)          pol.classList.add('pos-center');
+    else if (offset === 1)     pol.classList.add('pos-right1');
+    else if (offset === 2)     pol.classList.add('pos-right2');
+    else if (offset === total - 1) pol.classList.add('pos-left1');
+    else if (offset === total - 2) pol.classList.add('pos-left2');
+    else if (offset > total / 2)   pol.classList.add('pos-hidden-left');
+    else                           pol.classList.add('pos-hidden');
+  });
+
+  // Caption
+  const cap = document.getElementById('polaroid-caption');
+  cap.style.opacity = '0';
+  setTimeout(() => {
+    cap.textContent = CONFIG.photos[carouselIndex].caption;
+    cap.style.opacity = '1';
+  }, animate ? 200 : 0);
+
+  // Dots
+  document.querySelectorAll('#carousel-dots .dot').forEach((d, i) => {
+    d.classList.toggle('active', i === carouselIndex);
+  });
+}
+
+function slideCarousel(dir) {
+  const total = CONFIG.photos.length;
+  carouselIndex = ((carouselIndex + dir) % total + total) % total;
+  updateCarousel();
+}
+
+
+function smoothTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+</script>
+</body>
+</html>
